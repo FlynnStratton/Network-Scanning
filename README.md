@@ -2,7 +2,7 @@
 A network scanning tool
 
 
- --help  |    Show this menu
+
 
   Port scanner 
 		-ps  |    Port scanner eg. python NAT.py -ps (or --portscanner)
