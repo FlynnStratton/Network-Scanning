@@ -116,6 +116,9 @@ Github Profile: https://github.com/FlynnStratton/
 			except:
 				a = (Fore.RED,'[+] There is no wireless interface on the system. Or an error has been found with it')
 
+		else:
+			print(Fore.RED, '[+] Your operating system does not support this tool')
+
 
 
 
