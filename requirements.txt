@@ -1,0 +1,6 @@
+colorama==0.4.4
+lib-platform==1.2.7
+subprocess32==3.5.4
+pywifi==1.1.12
+pyfiglet==0.8.post1
+uuid==1.30
