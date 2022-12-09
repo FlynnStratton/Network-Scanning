@@ -116,8 +116,31 @@ Github Profile: https://github.com/FlynnStratton/
 			except:
 				a = (Fore.RED,'[+] There is no wireless interface on the system. Or an error has been found with it')
 
+		
+		elif 'linux' or 'parrot' in ops:
+			import argparse
+			
+
+			def get_args():
+			    parser = argparse.ArgumentParser()
+			    parser.add_argument('-t', '--target', dest='target', help='Target IP Address/Adresses')
+			    options = parser.parse_args()
+
+			    #Check for errors i.e if the user does not specify the target IP Address
+			    #Quit the program if the argument is missing
+			    #While quitting also display an error message
+			    if not options.target:
+				#Code to handle if interface is not specified
+				parser.error("[-] Please specify an IP Address or Addresses, use --help for more info.")
+			    return options
+
+			options = get_args()
+		
+		
 		else:
 			print(Fore.RED, '[+] Your operating system does not support this tool')
+			
+		
 
 
 
