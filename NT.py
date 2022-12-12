@@ -127,7 +127,7 @@ Github Profile: https://github.com/FlynnStratton/
 
 
 	def lan_scan():
-		if 'linux' or 'parrot' or 'windows' in ops:
+		if 'linux' or 'parrot' in ops:
 			print(Fore.GREEN)
 			data = "arp -a"
 			cmd = subprocess.Popen(data, shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE,
@@ -138,8 +138,9 @@ Github Profile: https://github.com/FlynnStratton/
 		else:
 			print(Fore.RED, '[+]This tool will not be able to run on your system')
 
-		data = f"getmac"
+		
 		if 'windows' or 'mac' in ops:
+			data = f"getmac"
 			cmd = subprocess.Popen(data, shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
 			output_byte = cmd.stdout.read() + cmd.stderr.read()
 			print(str(output_byte, "utf-8"))
